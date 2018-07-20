@@ -58,6 +58,16 @@ class HostsRequestMiddleware(HostsBaseMiddleware):
     def process_request(self, request):
         # Find best match, falling back to settings.DEFAULT_HOST
         host, kwargs = self.get_host(request.get_host())
+        fqdn = request.get_host().split(':')[0] 
+
+        try:
+            if 'localhost' in fqdn:
+                pass
+            elif 'flashframe' not in fqdn:
+                host.urlconf = 'website.urls.subdomain_urls'
+
+        except:
+            pass
         # This is the main part of this middleware
         request.urlconf = host.urlconf
         request.host = host
