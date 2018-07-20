@@ -63,6 +63,8 @@ class HostsRequestMiddleware(HostsBaseMiddleware):
         try:
             if 'localhost' in fqdn:
                 pass
+            elif 'fototrac' in fqdn:
+                pass
             elif 'flashframe' not in fqdn:
                 host.urlconf = 'website.urls.subdomain_urls'
 
