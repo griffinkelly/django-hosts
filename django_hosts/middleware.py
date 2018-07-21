@@ -59,13 +59,14 @@ class HostsRequestMiddleware(HostsBaseMiddleware):
         # Find best match, falling back to settings.DEFAULT_HOST
         host, kwargs = self.get_host(request.get_host())
         fqdn = request.get_host().split(':')[0] 
+        print(fqdn)
 
         try:
             if 'localhost' in fqdn:
                 pass
             elif 'fototrac' in fqdn:
                 pass
-            elif 'flashframe' not in fqdn:
+            elif 'corcano' not in fqdn:
                 host.urlconf = 'website.urls.subdomain_urls'
 
         except:
