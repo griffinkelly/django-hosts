@@ -67,6 +67,8 @@ class HostsRequestMiddleware(HostsBaseMiddleware):
                 pass
             elif 'fototrac' in fqdn:
                 pass
+            elif 'corcano' in fqdn:
+                pass
             elif 'corcano' not in fqdn:
                 host.urlconf = 'website.urls.subdomain_urls'
 
