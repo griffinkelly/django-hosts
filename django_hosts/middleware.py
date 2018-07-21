@@ -60,6 +60,7 @@ class HostsRequestMiddleware(HostsBaseMiddleware):
         host, kwargs = self.get_host(request.get_host())
         fqdn = request.get_host().split(':')[0] 
         print(fqdn)
+        print('fqdn')
 
         try:
             if 'localhost' in fqdn:
