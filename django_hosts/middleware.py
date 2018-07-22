@@ -62,6 +62,15 @@ class HostsRequestMiddleware(HostsBaseMiddleware):
         print(fqdn)
         print('fqdn')
 
+
+        # This is the main part of this middleware
+        request.urlconf = host.urlconf
+        request.host = host
+        # But we have to temporarily override the URLconf
+        # already to allow correctly reversing host URLs in
+        # the host callback, if needed.
+        current_urlconf = get_urlconf()
+
         try:
             if 'localhost' in fqdn:
                 pass
@@ -75,13 +84,6 @@ class HostsRequestMiddleware(HostsBaseMiddleware):
 
         except:
             pass
-        # This is the main part of this middleware
-        request.urlconf = host.urlconf
-        request.host = host
-        # But we have to temporarily override the URLconf
-        # already to allow correctly reversing host URLs in
-        # the host callback, if needed.
-        current_urlconf = get_urlconf()
         try:
             set_urlconf(host.urlconf)
             return host.callback(request, **kwargs)
