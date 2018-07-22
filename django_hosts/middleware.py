@@ -102,6 +102,10 @@ class HostsResponseMiddleware(HostsBaseMiddleware):
         # Find best match, falling back to settings.DEFAULT_HOST
         try:
             host, kwargs = self.get_host(request.get_host())
+            fqdn = request.get_host().split(':')[0] 
+            print(fqdn)
+            print('fqdn hosts')
+
         except DisallowedHost:
             # Bail out early, there is nothing to reset as HostsRequestMiddleware
             # never gets called with an invalid host.
@@ -109,6 +113,21 @@ class HostsResponseMiddleware(HostsBaseMiddleware):
         # This is the main part of this middleware
         request.urlconf = host.urlconf
         request.host = host
+
+        try:
+            if 'localhost' in fqdn:
+                pass
+            elif 'fototrac' in fqdn:
+                pass
+            elif 'corcano' in fqdn:
+                print('detected corcano in fqdn')
+                pass
+            elif 'corcano' not in fqdn:
+                host.urlconf = 'website.urls.subdomain_urls'
+
+        except:
+            pass
+
 
         set_urlconf(host.urlconf)
         return response
