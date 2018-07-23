@@ -58,9 +58,8 @@ class HostsRequestMiddleware(HostsBaseMiddleware):
     def process_request(self, request):
         # Find best match, falling back to settings.DEFAULT_HOST
         host, kwargs = self.get_host(request.get_host())
-        fqdn = request.get_host().split(':')[0] 
-        print(fqdn)
-        print('fqdn')
+        fqdn = request.get_host().split(':')[0]
+        print('fqdn', fqdn)
 
 
         # This is the main part of this middleware
@@ -84,6 +83,7 @@ class HostsRequestMiddleware(HostsBaseMiddleware):
 
         except:
             pass
+        print(host.urlconf)
         try:
             set_urlconf(host.urlconf)
             return host.callback(request, **kwargs)
@@ -103,8 +103,8 @@ class HostsResponseMiddleware(HostsBaseMiddleware):
         try:
             host, kwargs = self.get_host(request.get_host())
             fqdn = request.get_host().split(':')[0] 
-            print(fqdn)
-            print('fqdn hosts')
+
+            print('fqdn hosts', fqdn)
 
         except DisallowedHost:
             # Bail out early, there is nothing to reset as HostsRequestMiddleware
@@ -123,11 +123,12 @@ class HostsResponseMiddleware(HostsBaseMiddleware):
                 print('detected corcano in fqdn')
                 pass
             elif 'corcano' not in fqdn:
+                print('eliseiff')
                 host.urlconf = 'website.urls.subdomain_urls'
 
         except:
             pass
 
-
+        print(host.urlconf)
         set_urlconf(host.urlconf)
         return response
