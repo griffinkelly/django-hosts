@@ -71,14 +71,7 @@ class HostsRequestMiddleware(HostsBaseMiddleware):
         current_urlconf = get_urlconf()
 
         try:
-            if 'localhost' in fqdn:
-                pass
-            elif 'fototrac' in fqdn:
-                pass
-            elif 'corcano' in fqdn:
-                print('detected corcano in fqdn')
-                pass
-            elif 'corcano' not in fqdn:
+            if 'tracchicago' in fqdn:
                 host.urlconf = 'website.urls.subdomain_urls'
 
         except:
@@ -115,14 +108,7 @@ class HostsResponseMiddleware(HostsBaseMiddleware):
         request.host = host
 
         try:
-            if 'localhost' in fqdn:
-                pass
-            elif 'fototrac' in fqdn:
-                pass
-            elif 'corcano' in fqdn:
-                print('detected corcano in fqdn')
-                pass
-            elif 'corcano' not in fqdn:
+            if 'tracchicago' in fqdn:
                 print('eliseiff')
                 host.urlconf = 'website.urls.subdomain_urls'
 
