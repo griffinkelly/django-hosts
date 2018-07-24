@@ -93,7 +93,7 @@ class host(object):
         pattern to avoid rather unwieldy escaping in every definition.
         """
         self.regex = regex
-        self.compiled_regex = re.compile(r'%s(\.|$)' % regex)
+        self.compiled_regex = re.compile(r'%s(|$)' % regex)
         self.urlconf = urlconf
         self.name = name
         self._scheme = scheme
