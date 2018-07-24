@@ -58,10 +58,6 @@ class HostsRequestMiddleware(HostsBaseMiddleware):
     def process_request(self, request):
         # Find best match, falling back to settings.DEFAULT_HOST
         host, kwargs = self.get_host(request.get_host())
-        fqdn = request.get_host().split(':')[0]
-        print('fqdn', fqdn)
-
-
         # This is the main part of this middleware
         request.urlconf = host.urlconf
         request.host = host
@@ -69,16 +65,6 @@ class HostsRequestMiddleware(HostsBaseMiddleware):
         # already to allow correctly reversing host URLs in
         # the host callback, if needed.
         current_urlconf = get_urlconf()
-
-        try:
-            if 'tracchicago' in fqdn:
-                host.urlconf = 'website.urls.subdomain_urls'
-            elif 'www.corcano' in fqdn:
-                host.urlconf = 'urls'
-
-        except:
-            pass
-        print(host.urlconf)
         try:
             set_urlconf(host.urlconf)
             return host.callback(request, **kwargs)
@@ -97,10 +83,6 @@ class HostsResponseMiddleware(HostsBaseMiddleware):
         # Find best match, falling back to settings.DEFAULT_HOST
         try:
             host, kwargs = self.get_host(request.get_host())
-            fqdn = request.get_host().split(':')[0] 
-
-            print('fqdn hosts', fqdn)
-
         except DisallowedHost:
             # Bail out early, there is nothing to reset as HostsRequestMiddleware
             # never gets called with an invalid host.
@@ -109,15 +91,5 @@ class HostsResponseMiddleware(HostsBaseMiddleware):
         request.urlconf = host.urlconf
         request.host = host
 
-        try:
-            if 'tracchicago' in fqdn:
-                print('eliseiff')
-                host.urlconf = 'website.urls.subdomain_urls'
-            elif 'www.corcano' in fqdn:
-                host.urlconf = 'urls'
-        except:
-            pass
-
-        print(host.urlconf)
         set_urlconf(host.urlconf)
         return response
