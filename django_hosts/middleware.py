@@ -73,6 +73,8 @@ class HostsRequestMiddleware(HostsBaseMiddleware):
         try:
             if 'tracchicago' in fqdn:
                 host.urlconf = 'website.urls.subdomain_urls'
+            elif 'www.corcano' in fqdn:
+                host.urlconf = 'urls'
 
         except:
             pass
@@ -111,7 +113,8 @@ class HostsResponseMiddleware(HostsBaseMiddleware):
             if 'tracchicago' in fqdn:
                 print('eliseiff')
                 host.urlconf = 'website.urls.subdomain_urls'
-
+            elif 'www.corcano' in fqdn:
+                host.urlconf = 'urls'
         except:
             pass
 
